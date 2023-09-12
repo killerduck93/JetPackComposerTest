@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.surfaceColorAtElevation
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -87,11 +88,16 @@ class MainActivity : ComponentActivity() {
             }
             val painter = painterResource(id = R.drawable.pedometer_deluxe)
             val descriptor = "Pedometer first app"
-            val title = " Pedometer draw"
-            Box(modifier = Modifier.fillMaxSize(0.5f).padding(30.dp))
-            {
+            val title = " Pedometer "
 
+            Box(modifier = Modifier
+                .fillMaxSize(0.5f)
+                .offset(40.dp, 70.dp)
+                .padding(30.dp))
+            {
+               ImageCard(painter = painter, contentDescription = descriptor, title = title)
             }
+            // next video https://www.youtube.com/watch?v=nm_LNJWHi9A&list=PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC&index=5
         }
     }
 }
@@ -129,10 +135,19 @@ fun ImageCard(painter:Painter,   contentDescription : String, title: String, mod
             )
             Box(modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp),
+                .background(Brush.verticalGradient(
+                    colors = listOf(
+                        Color.Transparent,
+                        Color.Black
+                    ),
+                    startY = 300f // depends on layout
+                )))
+            Box(modifier = Modifier
+                .fillMaxSize(0.6f)
+                .padding(0.dp, 0.dp),
                 contentAlignment = Alignment.BottomStart)
             {
-               Text(title, style = TextStyle(color = Color.Blue, fontSize = 16.sp) )    }
+               Text(title, style = TextStyle(color = Color.Magenta, fontSize = 20.sp) )    }
         }        
     }
 }
