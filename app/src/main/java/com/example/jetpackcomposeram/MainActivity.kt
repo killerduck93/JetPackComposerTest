@@ -38,7 +38,16 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposeram.ui.theme.JetpackcomposerAMTheme
 
@@ -98,6 +107,48 @@ class MainActivity : ComponentActivity() {
                ImageCard(painter = painter, contentDescription = descriptor, title = title)
             }
             // next video https://www.youtube.com/watch?v=nm_LNJWHi9A&list=PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC&index=5
+            // no capital , underscore ok
+            val fontFamily = FontFamily(
+               Font(R.font.lexend_bold,FontWeight.Bold),
+               Font(R.font.lexend_extrabold,FontWeight.ExtraBold),
+               Font(R.font.lexend_light,FontWeight.Light),
+               Font(R.font.lexend_extralight,FontWeight.ExtraLight),
+               Font(R.font.lexend_medium,FontWeight.Medium),
+               Font(R.font.lexend_thin,FontWeight.Thin),
+               Font(R.font.lexend_regular,FontWeight.Normal),
+               Font(R.font.lexend_semibold,FontWeight.SemiBold),
+               Font(R.font.lexend_black,FontWeight.Black),
+            )
+             Box(modifier = Modifier
+                 .height(100.dp)
+                 .width(225.dp)
+                 .offset(100.dp,500.dp)
+                 .background(Color(0xFF101010))
+             )
+             {
+                 Text(
+                     text  = buildAnnotatedString {
+                          withStyle(
+                              style = SpanStyle(
+                                  color = Color.Gray,
+                                  fontSize = 45.sp,
+                              )
+                          ){
+                              append("Ginger")  // has style declered above
+                          }
+                         append("Ale") // has style declered below
+                     },
+                     color = Color.Green,
+                     fontSize = 40.sp,
+                     fontFamily = fontFamily,
+                     fontWeight = FontWeight.SemiBold,
+                     fontStyle = FontStyle.Italic,
+                     textAlign = TextAlign.Center,
+                     textDecoration = TextDecoration.Underline
+
+                 )
+             }
+          // next https://www.youtube.com/watch?v=s3m1PSd7VWc&list=PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC&index=6
         }
     }
 }
@@ -135,19 +186,25 @@ fun ImageCard(painter:Painter,   contentDescription : String, title: String, mod
             )
             Box(modifier = Modifier
                 .fillMaxSize()
-                .background(Brush.verticalGradient(
-                    colors = listOf(
-                        Color.Transparent,
-                        Color.Black
-                    ),
-                    startY = 300f // depends on layout
-                )))
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color.Black
+                        ),
+                        startY = 300f // depends on layout
+                    )
+                ))
             Box(modifier = Modifier
                 .fillMaxSize(0.6f)
                 .padding(0.dp, 0.dp),
                 contentAlignment = Alignment.BottomStart)
             {
-               Text(title, style = TextStyle(color = Color.Magenta, fontSize = 20.sp) )    }
+               Text(
+                   title,
+                   style = TextStyle(color = Color.Magenta, fontSize = 20.sp)
+
+               )    }
         }        
     }
 }
