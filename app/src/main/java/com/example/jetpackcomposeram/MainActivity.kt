@@ -18,14 +18,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
@@ -59,6 +64,7 @@ import kotlin.ranges.random
 
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -172,6 +178,33 @@ class MainActivity : ComponentActivity() {
             }
             // For a simple normal Snackbar use Scaffold
 
+
+            // For a simple normal Snackbar use Scaffold
+            val snackbarHostState = remember {
+                SnackbarHostState()
+            }
+            Scaffold(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(30.dp),
+                snackbarHost = {
+                    SnackbarHost (hostState = snackbarHostState)
+                }
+            )
+            { paddingValues ->
+                Column(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = paddingValues.calculateBottomPadding())
+                    .verticalScroll(rememberScrollState())) {
+
+                    Text("Bottom app bar padding:  $paddingValues")
+
+                    repeat(50) {
+                        Text(it.toString())
+                    }
+                }
+            }
+//end
         }
     }
 }
