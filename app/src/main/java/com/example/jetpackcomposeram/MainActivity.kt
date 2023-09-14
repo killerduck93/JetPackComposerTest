@@ -24,6 +24,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
@@ -35,6 +37,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.surfaceColorAtElevation
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -50,6 +54,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposeram.ui.theme.JetpackcomposerAMTheme
+import java.util.Random
+import kotlin.ranges.random
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,7 +129,7 @@ class MainActivity : ComponentActivity() {
              Box(modifier = Modifier
                  .height(100.dp)
                  .width(225.dp)
-                 .offset(100.dp,500.dp)
+                 .offset(100.dp, 500.dp)
                  .background(Color(0xFF101010))
              )
              {
@@ -149,10 +156,32 @@ class MainActivity : ComponentActivity() {
                  )
              }
           // next https://www.youtube.com/watch?v=s3m1PSd7VWc&list=PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC&index=6
+          // State for dynamic view and user UI : Recompising
+            ColorBox(
+                Modifier
+                    .fillMaxSize(0.4f)
+                    .offset(220.dp, 200.dp)
+                    .padding(20.dp, 20.dp),
+                descriptionBox = "ClickME"
+            )
+
+         // next https://www.youtube.com/watch?v=_yON9d9if6g&list=PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC&index=7
+        // Snackbar
+            Snackbar { // for full control of location and timing to be shown
+                Text(text = "Daje")
+            }
+            // For a simple normal Snackbar use Scaffold
+
         }
     }
 }
 
+
+
+
+
+
+// functions
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier, color: Color) {
     Text(
@@ -209,3 +238,26 @@ fun ImageCard(painter:Painter,   contentDescription : String, title: String, mod
     }
 }
 
+@Composable
+fun ColorBox(modifier: Modifier = Modifier, descriptionBox: String)
+{
+    val color = remember {
+        mutableStateOf(Color.Yellow)  // in order to not reset when composable is recalled
+    }  // remember from last composition
+
+    Box(modifier = modifier
+        .background(color.value)
+        .clickable {
+            color.value = Color(
+                kotlin.random.Random.nextFloat(),
+                kotlin.random.Random.nextFloat(),
+                kotlin.random.Random.nextFloat(),
+                1f
+            )
+        } ,
+
+    )
+    Text(descriptionBox, modifier = modifier, style = TextStyle(color = Color.Magenta, fontSize = 20.sp) // added modifier in order to sync box and label
+    )
+
+}
