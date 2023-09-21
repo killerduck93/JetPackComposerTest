@@ -64,6 +64,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposeram.ui.theme.JetpackcomposerAMTheme
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.*
 import java.util.Random
 import kotlin.ranges.random
 
@@ -186,7 +187,7 @@ class MainActivity : ComponentActivity() {
 
             // For a simple normal Snackbar use Scaffold
             val snackBarHostState = remember{SnackbarHostState()}
-            var textFieldState by remember{ mutableStateOf("") }
+            var textFieldState by remember{mutableStateOf("")}
             val scope = rememberCoroutineScope()
             Scaffold (
                 modifier = Modifier
